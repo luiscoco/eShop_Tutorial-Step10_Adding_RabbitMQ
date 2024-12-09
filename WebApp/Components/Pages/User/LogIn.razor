@@ -1,0 +1,41 @@
+﻿@page "/user/login"
+@using Microsoft.AspNetCore.Authorization
+@inject NavigationManager Nav
+@attribute [Authorize]
+@code {
+    [SupplyParameterFromQuery]
+    public string? ReturnUrl { get; set; }
+
+    [CascadingParameter]
+    public HttpContext? HttpContext { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var returnUrl = string.IsNullOrEmpty(ReturnUrl) ? "/" : ReturnUrl;
+
+        try
+        {
+            // Check if returnUrl is a well-formed URI relative or absolute
+            if (!Uri.IsWellFormedUriString(returnUrl, UriKind.RelativeOrAbsolute))
+            {
+                returnUrl = "/";
+            }
+
+            var url = new Uri(returnUrl, UriKind.RelativeOrAbsolute);
+
+            // Navigate to the resolved URL, ensuring a fallback to root if it's not absolute
+            Nav.NavigateTo(url.IsAbsoluteUri ? "/" : returnUrl);
+        }
+        catch (Exception ex)
+        {
+            // Log the exception or handle the fallback here
+            Console.WriteLine($"Navigation failed: {ex.Message}");
+            Nav.NavigateTo("/");  // Fallback to the root in case of failure
+        }
+
+        await base.OnInitializedAsync();
+    }
+
+    public static string Url(NavigationManager nav)
+        => $"user/login?returnUrl={Uri.EscapeDataString(nav.ToBaseRelativePath(nav.Uri))}";
+}
