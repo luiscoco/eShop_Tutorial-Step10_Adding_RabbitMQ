@@ -4,6 +4,14 @@ In the **eShop** application, **RabbitMQ** serves as the message broker responsi
 
 This inter-API communication system is implemented using three main classes: **EventBus**, **EventBusRabbitMQ**, and **IntegrationEventLogEF**
 
+These projects collectively handle messaging and event-driven architecture:
+
+**EventBus** provides the abstraction
+
+**EventBusRabbitMQ** integrates with RabbitMQ for actual messaging
+
+**IntegrationEventLogEF** ensures reliability by persisting integration events, enabling retry mechanisms in case of failure
+
 We review the eShop architecture general picture and how **RabbitMQ** is the message broker for coordinating actions between APIs
 
 ![image](https://github.com/user-attachments/assets/8d6f98ac-74a5-4b87-a807-229642404671)
@@ -107,8 +115,6 @@ public class EventBusSubscriptionInfo
 }
 ```
 
-
-
 ### 1.3. Events
 
 
@@ -122,11 +128,41 @@ public class EventBusSubscriptionInfo
 
 ## 2. EventBusRabbitMQ
 
+**Purpose**: Implements the EventBus abstraction using RabbitMQ as the messaging infrastructure
 
+**Key Responsibilities**:
+
+Integrate with RabbitMQ to publish and subscribe to messages
+
+Provide extensions and configurations specific to RabbitMQ
+
+**Notable Components**:
+
+RabbitMQEventBus.cs: The primary implementation for RabbitMQ-based event handling
+
+RabbitMqDependencyInjectionExtensions.cs: Facilitates dependency injection setup for RabbitMQ in the application
+
+RabbitMQTelemetry.cs: Possibly handles monitoring or logging specific to RabbitMQ
 
 ## 3. IntegrationEventLogEF
 
+Purpose: Manages the persistence of integration events in a database for reliable delivery.
 
+**Key Responsibilities**:
+
+Log and track the state of integration events (e.g., pending, published, failed)
+
+Use Entity Framework (EF) to persist events for durability
+
+**Notable Components**:
+
+IntegrationEventLogEntry.cs: Represents the structure of an event log entry in the database
+
+EventStateEnum.cs: Enumerates the states of an integration event (e.g., Pending, Published)
+
+Services: Likely includes logic to manage and query integration event logs
+
+IntegrationLogExtensions.cs: Provides utility methods for working with event logs
 
 
 ## 4. 
