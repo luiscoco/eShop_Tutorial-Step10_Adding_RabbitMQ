@@ -4,7 +4,7 @@ In the **eShop** application, **RabbitMQ** serves as the message broker responsi
 
 This inter-API communication system is implemented using three main classes: **EventBus**, **EventBusRabbitMQ**, and **IntegrationEventLogEF**
 
-We review the eShop architecture general picture and how RabbitMQ is the message broker syncronize the actions between APIs
+We review the eShop architecture general picture and how **RabbitMQ** is the message broker for coordinating actions between APIs
 
 ![image](https://github.com/user-attachments/assets/8d6f98ac-74a5-4b87-a807-229642404671)
 
