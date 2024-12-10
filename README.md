@@ -363,6 +363,13 @@ internal static class ActivityExtensions
 
 ### 2.4. EventBusOptions
 
+The EventBusOptions class defines two key options for an event bus that uses **RabbitMQ**
+
+**SubscriptionClientName**: Identifies the client or consumer
+
+**RetryCount**: Configures the number of retry attempts for operations
+
+This class is part of the configuration framework, making it easy to customize and manage event bus behavior in a structured way
 
 ```csharp
 namespace eShop.EventBusRabbitMQ;
@@ -373,9 +380,6 @@ public class EventBusOptions
     public int RetryCount { get; set; } = 10;
 }
 ```
-
-
-
 
 ### 2.5. RabbitMqDependencyInjectionExtensions
 
