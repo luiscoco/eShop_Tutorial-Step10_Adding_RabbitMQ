@@ -36,13 +36,9 @@ Extensions: Utility or extension methods to support the event bus
 
 ### 1.1. Load Nuget Packages
 
-**Microsoft.Extensions.DependencyInjection.Abstractions**:
+**Microsoft.Extensions.DependencyInjection.Abstractions**: Provides the core abstractions for dependency injection and service management in .NET
 
-
-
-**Microsoft.Extensions.Options**:
-
-
+**Microsoft.Extensions.Options**: Provides a structured way to manage and validate application configuration using the Options pattern
 
 ### 1.2. Abstractions
 
