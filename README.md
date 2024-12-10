@@ -383,6 +383,17 @@ public class EventBusOptions
 
 ### 2.5. RabbitMqDependencyInjectionExtensions
 
+This code defines a set of extension methods for integrating a RabbitMQ-based event bus into a .NET application's dependency injection and hosting framework
+
+The **AddRabbitMqEventBus** method simplifies the integration of a RabbitMQ-based event bus into a .NET application by:
+
+- Registering RabbitMQ client and telemetry components
+
+- Configuring the event bus options from the configuration file
+
+- Registering the event bus as a hosted service to start consuming messages on application startup
+
+- It follows the dependency injection and configuration patterns in .NET, ensuring modularity and maintainability
 
 ```csharp
 using eShop.EventBusRabbitMQ;
