@@ -799,6 +799,21 @@ public sealed class RabbitMQEventBus(
 
 ### 2.7. RabbitMQTelemetry
 
+The RabbitMQTelemetry class encapsulates distributed tracing and context propagation tools for RabbitMQ:
+
+**ActivitySource**: Enables tracing operations like publishing or consuming messages
+
+**Propagator**: Manages the propagation of trace context across service boundaries
+
+It aligns with OpenTelemetry standards, making it easier to monitor and debug distributed systems
+
+**Purpose in the Application**:
+
+- Provides centralized tools for managing telemetry in RabbitMQ-based event-driven systems
+
+- Facilitates distributed tracing with OpenTelemetry, enabling better observability of message flows
+
+- Simplifies trace context management across services, ensuring that logs and telemetry data from different parts of the system are connected
 
 ```csharp
 using System.Diagnostics;
@@ -814,8 +829,6 @@ public class RabbitMQTelemetry
     public TextMapPropagator Propagator { get; } = Propagators.DefaultTextMapPropagator;
 }
 ```
-
-
 
 ## 3. IntegrationEventLogEF
 
