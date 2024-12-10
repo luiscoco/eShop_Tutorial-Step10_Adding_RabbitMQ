@@ -334,7 +334,11 @@ Ensuring the application is resilient against network issues or service outages
 
 ### 2.3. ActivityExtensions
 
+This code defines an extension method for the **Activity** class, which is used in distributed tracing to represent the execution of a single operation or span in a system
 
+The **SetExceptionTags** method is a utility for **logging exception details** into an Activity
+
+By tagging the **Activity** with exception information and marking it as an error, it helps observability tools (like OpenTelemetry) provide meaningful insights into application errors and failures
 
 ```csharp
 using System.Diagnostics;
@@ -356,10 +360,6 @@ internal static class ActivityExtensions
     }
 }
 ```
-
-
-
-
 
 ### 2.4. EventBusOptions
 
