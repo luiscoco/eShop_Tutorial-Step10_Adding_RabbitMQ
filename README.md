@@ -64,6 +64,9 @@ public interface IEventBus
     Task PublishAsync(IntegrationEvent @event);
 }
 ```
+
+**IEventBusBuilder** configures the event bus and its dependencies
+
 **IEventBusBuilder.cs** defines a builder pattern for configuring an event bus
 
 **Purpose**: Provides access to the **IServiceCollection** so that services related to the event bus can be registered with the dependency injection (DI) container
@@ -80,6 +83,18 @@ public interface IEventBusBuilder
     public IServiceCollection Services { get; }
 }
 ```
+
+**IIntegrationEventHandler** defines how to handle incoming events
+
+**IIntegrationEventHandler.cs** Defines the contract for handling integration events
+
+Generic Interface ```IIntegrationEventHandler<TIntegrationEvent>```: Handles events of a specific type (TIntegrationEvent), which must derive from IntegrationEvent
+
+Provides the Handle method that processes the event. Includes a default implementation for the non-generic Handle method that casts and delegates to the generic one
+
+Non-Generic Interface ```IIntegrationEventHandler```: Defines a general-purpose Handle method for all IntegrationEvent types
+
+Usage: Event handlers implement these interfaces to define custom logic for processing specific integration events
 
 **IIntegrationEventHandler.cs**
 
@@ -99,6 +114,20 @@ public interface IIntegrationEventHandler
     Task Handle(IntegrationEvent @event);
 }
 ```
+
+**EventBusSubscriptionInfo** manages event type metadata and serialization settings
+
+**EventBusSubscriptionInfo.cs** Manages subscription information for the event bus
+
+**EventTypes**: A dictionary that maps event names (as strings) to their corresponding CLR types. This is used to look up the type of an event when processing messages
+
+**JsonSerializerOptions**: Specifies how events should be serialized/deserialized using System.Text.Json
+
+**DefaultSerializerOptions**: Defines default serialization options, including a type resolver (IJsonTypeInfoResolver) for efficient type handling
+
+**CreateDefaultTypeResolver**: Creates a default type resolver for handling serialization metadata
+
+**Usage**: This class is used internally by the event bus to manage event subscriptions and ensure proper serialization/deserialization of events
 
 **EventBusSubscriptionInfo.cs**
 
