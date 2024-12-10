@@ -188,50 +188,17 @@ public record IntegrationEvent
 
 ### 1.4. Extensions
 
-**EventBusBuilderExtensions.cs**
+This code defines a set of **extension methods** for configuring and extending the functionality of an event bus in a .NET application
 
-```csharp
-using System.Diagnostics.CodeAnalysis;
-using System.Text.Json;
-using eShop.EventBus.Abstractions;
-using eShop.EventBus.Extensions;
+This code is part of a framework for setting up and managing an event-driven system using a message bus. It focuses on:
 
-namespace Microsoft.Extensions.DependencyInjection;
+Customizing **JSON serialization options** for events: **ConfigureJsonOptions**
 
-public static class EventBusBuilderExtensions
-{
-    public static IEventBusBuilder ConfigureJsonOptions(this IEventBusBuilder eventBusBuilder, Action<JsonSerializerOptions> configure)
-    {
-        eventBusBuilder.Services.Configure<EventBusSubscriptionInfo>(o =>
-        {
-            configure(o.JsonSerializerOptions);
-        });
+Defining **subscriptions to events** and their handlers with DI: **AddSubscription**
 
-        return eventBusBuilder;
-    }
+Supporting multiple handlers for the same event type
 
-    public static IEventBusBuilder AddSubscription<T, [DynamicallyAccessedMembers(DynamicallyAccessedMemberTypes.PublicConstructors)] TH>(this IEventBusBuilder eventBusBuilder)
-        where T : IntegrationEvent
-        where TH : class, IIntegrationEventHandler<T>
-    {
-        // Use keyed services to register multiple handlers for the same event type
-        // the consumer can use IKeyedServiceProvider.GetKeyedService<IIntegrationEventHandler>(typeof(T)) to get all
-        // handlers for the event type.
-        eventBusBuilder.Services.AddKeyedTransient<IIntegrationEventHandler, TH>(typeof(T));
-
-        eventBusBuilder.Services.Configure<EventBusSubscriptionInfo>(o =>
-        {
-            // Keep track of all registered event types and their name mapping. We send these event types over the message bus
-            // and we don't want to do Type.GetType, so we keep track of the name mapping here.
-
-            // This list will also be used to subscribe to events from the underlying message broker implementation.
-            o.EventTypes[typeof(T).Name] = typeof(T);
-        });
-
-        return eventBusBuilder;
-    }
-}
-```
+Ensuring event type mappings are tracked for runtime efficiency and correctness
 
 **EventBusBuilderExtensions.cs**
 
