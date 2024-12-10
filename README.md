@@ -328,19 +328,17 @@ Ensuring the application is resilient against network issues or service outages
 
 ![image](https://github.com/user-attachments/assets/b02134b1-ac49-4ee1-8348-a5cf75a1fe53)
 
-### 2.2.
+### 2.2. Load the EventBus project reference
+
+![image](https://github.com/user-attachments/assets/f2f7874d-ee4d-49af-9467-8db8d3c11300)
+
+### 2.3. 
 
 
 
 
 
-### 2.3.
-
-
-
-
-
-### 2.4.
+### 2.4. 
 
 
 
