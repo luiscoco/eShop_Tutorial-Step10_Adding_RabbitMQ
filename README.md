@@ -290,6 +290,62 @@ RabbitMqDependencyInjectionExtensions.cs: Facilitates dependency injection setup
 
 RabbitMQTelemetry.cs: Possibly handles monitoring or logging specific to RabbitMQ
 
+### 2.1. Load Nuge Packages
+
+**Aspire.RabbitMQ.Client**: Adds support for messaging with RabbitMQ
+
+Purpose: A library for interacting with RabbitMQ, a popular message broker used for implementing messaging and queuing in distributed systems
+
+Features: Provides client-side tools for sending and receiving messages through RabbitMQ
+
+Likely wraps or extends the base RabbitMQ client (RabbitMQ.Client) to add additional functionality or simplify usage
+
+Typical Use Case: Used in applications that need to implement message-based communication between services, such as event-driven architectures or microservices
+
+**Microsoft.Extensions.Options.ConfigurationExtensions**: Provides configuration binding and management for the application's settings
+
+Purpose: Extends the functionality of the Options Pattern in .NET by providing integration with configuration sources, such as appsettings.json or environment variables
+
+Features: Enables seamless binding of configuration data from IConfiguration sources into strongly-typed option objects
+
+Simplifies accessing settings in a structured and type-safe manner
+
+Typical Use Case: Automatically mapping configuration sections from JSON or environment variables into strongly-typed classes
+
+Ensuring that application settings are easy to manage and validate
+
+**Polly.Core**: Adds reliability features for handling transient faults and improving application resilience
+
+Purpose: Polly is a resilience and transient fault-handling library for .NET applications. The Polly.Core package represents the core functionality of the library
+
+Features: Implements resilience strategies like retries, circuit breakers, timeouts, bulkhead isolation, and fallback mechanisms 
+
+Lightweight and extensible, designed for integration into applications needing fault tolerance and reliability
+
+Typical Use Case: handling intermittent failures in external systems like APIs, databases, or message brokers
+
+Ensuring the application is resilient against network issues or service outages
+
+![image](https://github.com/user-attachments/assets/b02134b1-ac49-4ee1-8348-a5cf75a1fe53)
+
+### 2.2.
+
+
+
+
+
+### 2.3.
+
+
+
+
+
+### 2.4.
+
+
+
+
+
 ## 3. IntegrationEventLogEF
 
 Purpose: Manages the persistence of integration events in a database for reliable delivery.
