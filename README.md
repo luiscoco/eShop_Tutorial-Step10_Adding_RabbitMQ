@@ -159,6 +159,12 @@ public class EventBusSubscriptionInfo
 
 ### 1.3. Events
 
+This **IntegrationEvent** class is a base model for integration events in a distributed system
+
+It ensures that all events have a unique identifier (**Id**) for tracking purposes, and record the exact time they were created (**CreationDate**)
+
+This is often used in **event-driven** architectures, where events are transmitted across different services (e.g., in microservices)
+
 **IntegrationEvent.cs**
 
 ```csharp
