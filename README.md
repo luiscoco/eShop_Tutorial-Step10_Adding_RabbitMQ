@@ -46,7 +46,7 @@ Extensions: Utility or extension methods to support the event bus
 
 ### 1.2. Abstractions
 
-**IEventBus**: Handles event publishing
+**IEventBus** handles event publishing
 
 **IEventBus.cs** Defines the contract for an event bus
 
@@ -64,8 +64,11 @@ public interface IEventBus
     Task PublishAsync(IntegrationEvent @event);
 }
 ```
+**IEventBusBuilder.cs** defines a builder pattern for configuring an event bus
 
+**Purpose**: Provides access to the **IServiceCollection** so that services related to the event bus can be registered with the dependency injection (DI) container
 
+**Usage**: Used during application startup to configure event bus services
 
 **IEventBusBuilder.cs**
 
