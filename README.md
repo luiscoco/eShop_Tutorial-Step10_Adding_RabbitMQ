@@ -46,6 +46,14 @@ Extensions: Utility or extension methods to support the event bus
 
 ### 1.2. Abstractions
 
+**IEventBus**: Handles event publishing
+
+**IEventBus.cs** Defines the contract for an event bus
+
+**Purpose**: It specifies a method **PublishAsync** that allows asynchronous publishing of integration events (IntegrationEvent)
+
+**Usage**: Any class implementing **IEventBus** is responsible for defining how events are published, e.g., sending messages to a message queue (like RabbitMQ or Azure Service Bus)
+
 **IEventBus.cs**
 
 ```csharp
@@ -56,6 +64,8 @@ public interface IEventBus
     Task PublishAsync(IntegrationEvent @event);
 }
 ```
+
+
 
 **IEventBusBuilder.cs**
 
