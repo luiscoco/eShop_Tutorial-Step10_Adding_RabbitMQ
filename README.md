@@ -450,6 +450,29 @@ public static class RabbitMqDependencyInjectionExtensions
 
 ### 2.6. RabbitMQEventBus
 
+This code defines a RabbitMQEventBus class, which implements an event bus using RabbitMQ for message-based communication in a distributed system
+
+This class provides a robust RabbitMQ-based event bus with:
+
+**Message Publishing and Consumption**: Handles event-based communication using RabbitMQ
+
+**Resilience**: Implements retry logic for transient failures using Polly
+
+**Distributed Tracing**: Integrates OpenTelemetry for observability
+
+**Event Processing**: Manages event subscriptions and invokes appropriate handlers
+
+**Best Practices**: Follows modern practices for distributed systems, such as telemetry, retries, and message acknowledgment
+
+**Typical Workflow**:
+
+**Application Startup**: The **StartAsync** method initializes the RabbitMQ connection and begins consuming messages
+
+**Publishing Events**: **PublishAsync** serializes the event, enriches it with trace context, and publishes it to RabbitMQ
+
+**Message Consumption**: Messages are consumed asynchronously, deserialized, and passed to appropriate event handlers
+
+**Telemetry**: Activities are created for each operation (publish/consume) to provide distributed traceability
 
 ```csharp
 namespace eShop.EventBusRabbitMQ;
