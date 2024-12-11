@@ -852,9 +852,7 @@ Services: Likely includes logic to manage and query integration event logs
 
 IntegrationLogExtensions.cs: Provides utility methods for working with event logs
 
-
 ## 4. We Add RabbitMQ in the eShop.AppHost project
-
 
 ### 4.1. We Add the Nuget Package
 
@@ -876,10 +874,30 @@ Health Checks: Automatically adds health checks to verify that the RabbitMQ serv
 
 ### 4.2. We modify the eShop.AppHost middleware
 
-**Program.cs**
+We add the RabbitMQ container to the application model
 
 ```csharp
+var rabbitMq = builder.AddRabbitMQ("eventbus");
+```
 
+A connection string from a source resource is injected as an environment variable into a destination resource
+
+```csharp
+var basketApi = builder.AddProject<Projects.Basket_API>("basket-api")
+    .WithReference(redis)
+    .WithReference(rabbitMq).WaitFor(rabbitMq)
+    .WithEnvironment("Identity__Url", identityEndpoint);
+
+var catalogApi = builder.AddProject<Projects.Catalog_API>("catalog-api")
+    .WithReference(rabbitMq).WaitFor(rabbitMq)
+    .WithReference(catalogDb);
+
+var webApp = builder.AddProject<Projects.WebApp>("webapp", launchProfileName)
+    .WithExternalHttpEndpoints()
+    .WithReference(basketApi)
+    .WithReference(catalogApi)
+    .WithReference(rabbitMq).WaitFor(rabbitMq)
+    .WithEnvironment("IdentityUrl", identityEndpoint);
 ```
 
 
