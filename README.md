@@ -14,7 +14,7 @@ These projects collectively handle messaging and event-driven architecture:
 
 **IntegrationEventLogEF** ensures reliability by persisting integration events, enabling retry mechanisms in case of failure
 
-![image](https://github.com/user-attachments/assets/8ae85b31-349c-4e0e-aef6-c2ec171a7d70)
+![image](https://github.com/user-attachments/assets/e4ca1f0e-28f3-4fe0-8fef-8ecf923a1460)
 
 ## 1. EventBus
 
