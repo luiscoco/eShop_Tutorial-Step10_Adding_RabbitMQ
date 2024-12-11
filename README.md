@@ -40,6 +40,8 @@ Extensions: Utility or extension methods to support the event bus
 
 **Microsoft.Extensions.Options**: Provides a structured way to manage and validate application configuration using the Options pattern
 
+![image](https://github.com/user-attachments/assets/b4254887-f7b8-4b4a-9781-47f380c49c01)
+
 ### 1.2. Abstractions
 
 **IEventBus** handles event publishing
@@ -326,11 +328,11 @@ Typical Use Case: handling intermittent failures in external systems like APIs, 
 
 Ensuring the application is resilient against network issues or service outages
 
-![image](https://github.com/user-attachments/assets/b02134b1-ac49-4ee1-8348-a5cf75a1fe53)
+![image](https://github.com/user-attachments/assets/d1dbad04-f184-454e-8df7-53f0d5a60d01)
 
-### 2.2. Load the EventBus project reference
+### 2.2. Load the EventBusRabbitMQ project reference
 
-![image](https://github.com/user-attachments/assets/f2f7874d-ee4d-49af-9467-8db8d3c11300)
+![image](https://github.com/user-attachments/assets/eaf0b10c-9575-4239-8a4d-0f64af3a80e1)
 
 ### 2.3. ActivityExtensions
 
