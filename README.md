@@ -2,7 +2,7 @@
 
 In the **eShop** application, **RabbitMQ** serves as the **message broker** responsible for handling events and enabling seamless **communication between the back-end APIs**
 
-![image](https://github.com/user-attachments/assets/8d6f98ac-74a5-4b87-a807-229642404671)
+![image](https://github.com/user-attachments/assets/47639548-107d-42bf-b511-7ee5a49f446d)
 
 This inter-API communication system is implemented using three main projects: **EventBus**, **EventBusRabbitMQ**, and **IntegrationEventLogEF**
 
