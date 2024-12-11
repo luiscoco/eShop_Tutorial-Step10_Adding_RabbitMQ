@@ -853,7 +853,35 @@ Services: Likely includes logic to manage and query integration event logs
 IntegrationLogExtensions.cs: Provides utility methods for working with event logs
 
 
-## 4. 
+## 4. We Add RabbitMQ in the eShop.AppHost project
+
+
+### 4.1. We Add the Nuget Package
+
+![image](https://github.com/user-attachments/assets/afe12f75-0656-44cb-9bba-bd7173ab9755)
+
+**Aspire.Hosting.RabbitMQ**: provides extension methods and resource definitions for integrating **RabbitMQ** servers into .NET Aspire applications
+
+It enables developers to configure RabbitMQ resources within their application's hosting environment, facilitating seamless communication between services
+
+**Key Features**:
+
+Resource Configuration: Allows the addition of RabbitMQ server resources to the application model using the AddRabbitMQ method
+
+Management Plugin Support: Enables the RabbitMQ management plugin for monitoring and management purposes through the WithManagementPlugin method
+
+Data Persistence Options: Supports configuring data persistence using volumes or bind mounts to ensure data durability across container restarts
+
+Health Checks: Automatically adds health checks to verify that the RabbitMQ server is running and that a connection can be established
+
+### 4.2. We modify the eShop.AppHost middleware
+
+**Program.cs**
+
+```csharp
+
+```
+
 
 
 
