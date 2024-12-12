@@ -874,7 +874,11 @@ Health Checks: Automatically adds health checks to verify that the RabbitMQ serv
 
 ### 4.2. We modify the eShop.AppHost middleware
 
-We add the RabbitMQ container to the application model
+We add the **RabbitMQ** container to the application model
+
+This line of code configures a **RabbitMQ** server for the application, allowing it to send and receive messages for event-driven or distributed architectures
+
+The name "eventbus" suggests that the **RabbitMQ** instance is intended to be used as an event bus for publishing and consuming events between services
 
 ```csharp
 var rabbitMq = builder.AddRabbitMQ("eventbus");
