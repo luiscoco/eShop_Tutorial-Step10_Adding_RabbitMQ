@@ -884,18 +884,26 @@ The name "eventbus" suggests that the **RabbitMQ** instance is intended to be us
 var rabbitMq = builder.AddRabbitMQ("eventbus");
 ```
 
-A connection string from a source resource is injected as an environment variable into a destination resource
+The following code configures a set of projects (or microservices) in a .NET application using a builder pattern
+
+builder: This object is used to configure resources and dependencies for various projects in the application
+
+AddProject: Registers a new project (or microservice) with a specified name and additional configuration
 
 ```csharp
 var basketApi = builder.AddProject<Projects.Basket_API>("basket-api")
     .WithReference(redis)
     .WithReference(rabbitMq).WaitFor(rabbitMq)
     .WithEnvironment("Identity__Url", identityEndpoint);
+```
 
+```csharp
 var catalogApi = builder.AddProject<Projects.Catalog_API>("catalog-api")
     .WithReference(rabbitMq).WaitFor(rabbitMq)
     .WithReference(catalogDb);
+```
 
+```csharp
 var webApp = builder.AddProject<Projects.WebApp>("webapp", launchProfileName)
     .WithExternalHttpEndpoints()
     .WithReference(basketApi)
