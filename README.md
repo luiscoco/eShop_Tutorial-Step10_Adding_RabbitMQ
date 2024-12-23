@@ -1005,6 +1005,12 @@ resiliency strategies
 
 - Reusability: Encapsulates logic for transactions and resiliency in one place
 
+This utility is particularly useful in **microservices** or **event-driven** architectures where:
+
+- Operations span multiple steps or databases
+
+- Connection failures or retries need to be handled gracefully
+
 ```csharp
 namespace eShop.IntegrationEventLogEF.Utilities;
 
@@ -1032,6 +1038,7 @@ public class ResilientTransaction
 ```
 
 ### 3.7. IIntegrationEventLogService
+
 
 
 ```csharp
