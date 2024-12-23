@@ -883,6 +883,22 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 
 ### 3.3. EventStateEnum
 
+**NotPublished = 0**: The event has been created but has not been published yet
+
+This could be the default state of a new event
+
+**InProgress = 1**: The event is currently in the process of being published
+
+Indicates an intermediate state while the system is handling the publishing
+
+**Published = 2**: The event has been successfully published
+
+Represents a completed and successful state
+
+**PublishedFailed = 3**: The event publication failed
+
+Indicates an error or failure in the publishing process that requires attention or retry
+
 ```csharp
 namespace eShop.IntegrationEventLogEF;
 
