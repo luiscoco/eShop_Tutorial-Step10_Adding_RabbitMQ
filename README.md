@@ -913,6 +913,11 @@ public enum EventStateEnum
 
 ### 3.4. IntegrationEventLogEntry
 
+**Serialization/Deserialization**: Converts integration event objects to JSON for storage and retrieves them back as objects when needed
+
+**Database Mapping**: Acts as a log entry that can be saved to a database (e.g., for tracking the state of events in an event-driven system)
+
+**State Management**: Tracks the state (State, TimesSent) and other metadata (TransactionId, CreationTime) related to an integration event
 
 ```csharp
 using System.ComponentModel.DataAnnotations;
