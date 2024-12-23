@@ -869,13 +869,15 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 
 ### 3.1. Load Nuge Packages
 
+![image](https://github.com/user-attachments/assets/a044facf-40bf-4ec8-b921-6bef220e7923)
 
+**Npgsql.EntityFrameworkCore.PostgreSQL**: 
 
+### 3.2. Add Project Reference
 
-### 3.2. 
+![image](https://github.com/user-attachments/assets/099ffa2e-595b-4557-af63-bcb83e702135)
 
-
-
+**EventBus**:
 
 
 ### 3.3. 
