@@ -871,14 +871,15 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 
 ![image](https://github.com/user-attachments/assets/a044facf-40bf-4ec8-b921-6bef220e7923)
 
-**Npgsql.EntityFrameworkCore.PostgreSQL**: 
+**Npgsql.EntityFrameworkCore.PostgreSQL**: this is a NuGet package that provides a PostgreSQL provider for Entity Framework Core (EF Core)
+
+**EF Core** is an **Object-Relational Mapper (ORM)** for .NET, allowing developers to work with databases using .NET objects rather than raw SQL queries
 
 ### 3.2. Add Project Reference
 
 ![image](https://github.com/user-attachments/assets/099ffa2e-595b-4557-af63-bcb83e702135)
 
 **EventBus**:
-
 
 ### 3.3. EventStateEnum
 
