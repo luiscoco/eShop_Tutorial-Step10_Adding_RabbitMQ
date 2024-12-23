@@ -159,6 +159,8 @@ public class EventBusSubscriptionInfo
 
 ### 1.3. Events
 
+![image](https://github.com/user-attachments/assets/c49d2ee4-abb7-4a72-a4ab-c254767ca310)
+
 This **IntegrationEvent** class is a base model for integration events in a distributed system
 
 It ensures that all events have a unique identifier (**Id**) for tracking purposes, and record the exact time they were created (**CreationDate**)
