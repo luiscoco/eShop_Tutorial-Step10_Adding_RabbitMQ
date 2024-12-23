@@ -883,28 +883,81 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 ### 3.3. EventStateEnum
 
 ```csharp
+namespace eShop.IntegrationEventLogEF;
 
+public enum EventStateEnum
+{
+    NotPublished = 0,
+    InProgress = 1,
+    Published = 2,
+    PublishedFailed = 3
+}
 ```
-
-
 
 ### 3.4. IntegrationEventLogEntry
 
 
 ```csharp
+using System.ComponentModel.DataAnnotations;
 
+namespace eShop.IntegrationEventLogEF;
+
+public class IntegrationEventLogEntry
+{
+    private static readonly JsonSerializerOptions s_indentedOptions = new() { WriteIndented = true };
+    private static readonly JsonSerializerOptions s_caseInsensitiveOptions = new() { PropertyNameCaseInsensitive = true };
+
+    private IntegrationEventLogEntry() { }
+    public IntegrationEventLogEntry(IntegrationEvent @event, Guid transactionId)
+    {
+        EventId = @event.Id;
+        CreationTime = @event.CreationDate;
+        EventTypeName = @event.GetType().FullName;
+        Content = JsonSerializer.Serialize(@event, @event.GetType(), s_indentedOptions);
+        State = EventStateEnum.NotPublished;
+        TimesSent = 0;
+        TransactionId = transactionId;
+    }
+    public Guid EventId { get; private set; }
+    [Required]
+    public string EventTypeName { get; private set; }
+    [NotMapped]
+    public string EventTypeShortName => EventTypeName.Split('.')?.Last();
+    [NotMapped]
+    public IntegrationEvent IntegrationEvent { get; private set; }
+    public EventStateEnum State { get; set; }
+    public int TimesSent { get; set; }
+    public DateTime CreationTime { get; private set; }
+    [Required]
+    public string Content { get; private set; }
+    public Guid TransactionId { get; private set; }
+
+    public IntegrationEventLogEntry DeserializeJsonContent(Type type)
+    {
+        IntegrationEvent = JsonSerializer.Deserialize(Content, type, s_caseInsensitiveOptions) as IntegrationEvent;
+        return this;
+    }
+}
 ```
-
-
-
-
-
 
 ### 3.5. IntegrationLogExtensions
 
 
 ```csharp
+namespace eShop.IntegrationEventLogEF;
 
+public static class IntegrationLogExtensions
+{
+    public static void UseIntegrationEventLogs(this ModelBuilder builder)
+    {
+        builder.Entity<IntegrationEventLogEntry>(builder =>
+        {
+            builder.ToTable("IntegrationEventLog");
+
+            builder.HasKey(e => e.EventId);
+        });
+    }
+}
 ```
 
 
@@ -912,7 +965,29 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 
 
 ```csharp
+namespace eShop.IntegrationEventLogEF.Utilities;
 
+public class ResilientTransaction
+{
+    private readonly DbContext _context;
+    private ResilientTransaction(DbContext context) =>
+        _context = context ?? throw new ArgumentNullException(nameof(context));
+
+    public static ResilientTransaction New(DbContext context) => new(context);
+
+    public async Task ExecuteAsync(Func<Task> action)
+    {
+        //Use of an EF Core resiliency strategy when using multiple DbContexts within an explicit BeginTransaction():
+        //See: https://docs.microsoft.com/en-us/ef/core/miscellaneous/connection-resiliency
+        var strategy = _context.Database.CreateExecutionStrategy();
+        await strategy.ExecuteAsync(async () =>
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            await action();
+            await transaction.CommitAsync();
+        });
+    }
+}
 ```
 
 
@@ -926,16 +1001,118 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 
 
 
-### 3.8. IntegrationEventLogService
+### 3.8. IIntegrationEventLogService
 
 
 ```csharp
+namespace eShop.IntegrationEventLogEF.Services;
 
+public interface IIntegrationEventLogService
+{
+    Task<IEnumerable<IntegrationEventLogEntry>> RetrieveEventLogsPendingToPublishAsync(Guid transactionId);
+    Task SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction);
+    Task MarkEventAsPublishedAsync(Guid eventId);
+    Task MarkEventAsInProgressAsync(Guid eventId);
+    Task MarkEventAsFailedAsync(Guid eventId);
+}
 ```
 
+### 3.9. IntegrationEventLogService
 
 
+```csharp
+namespace eShop.IntegrationEventLogEF.Services;
 
+public class IntegrationEventLogService<TContext> : IIntegrationEventLogService, IDisposable
+    where TContext : DbContext
+{
+    private volatile bool _disposedValue;
+    private readonly TContext _context;
+    private readonly Type[] _eventTypes;
+
+    public IntegrationEventLogService(TContext context)
+    {
+        _context = context;
+        _eventTypes = Assembly.Load(Assembly.GetEntryAssembly().FullName)
+            .GetTypes()
+            .Where(t => t.Name.EndsWith(nameof(IntegrationEvent)))
+            .ToArray();
+    }
+
+    public async Task<IEnumerable<IntegrationEventLogEntry>> RetrieveEventLogsPendingToPublishAsync(Guid transactionId)
+    {
+        var result = await _context.Set<IntegrationEventLogEntry>()
+            .Where(e => e.TransactionId == transactionId && e.State == EventStateEnum.NotPublished)
+            .ToListAsync();
+
+        if (result.Count != 0)
+        {
+            return result.OrderBy(o => o.CreationTime)
+                .Select(e => e.DeserializeJsonContent(_eventTypes.FirstOrDefault(t => t.Name == e.EventTypeShortName)));
+        }
+
+        return [];
+    }
+
+    public Task SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction)
+    {
+        if (transaction == null) throw new ArgumentNullException(nameof(transaction));
+
+        var eventLogEntry = new IntegrationEventLogEntry(@event, transaction.TransactionId);
+
+        _context.Database.UseTransaction(transaction.GetDbTransaction());
+        _context.Set<IntegrationEventLogEntry>().Add(eventLogEntry);
+
+        return _context.SaveChangesAsync();
+    }
+
+    public Task MarkEventAsPublishedAsync(Guid eventId)
+    {
+        return UpdateEventStatus(eventId, EventStateEnum.Published);
+    }
+
+    public Task MarkEventAsInProgressAsync(Guid eventId)
+    {
+        return UpdateEventStatus(eventId, EventStateEnum.InProgress);
+    }
+
+    public Task MarkEventAsFailedAsync(Guid eventId)
+    {
+        return UpdateEventStatus(eventId, EventStateEnum.PublishedFailed);
+    }
+
+    private Task UpdateEventStatus(Guid eventId, EventStateEnum status)
+    {
+        var eventLogEntry = _context.Set<IntegrationEventLogEntry>().Single(ie => ie.EventId == eventId);
+        eventLogEntry.State = status;
+
+        if (status == EventStateEnum.InProgress)
+            eventLogEntry.TimesSent++;
+
+        return _context.SaveChangesAsync();
+    }
+
+    protected virtual void Dispose(bool disposing)
+    {
+        if (!_disposedValue)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+
+
+            _disposedValue = true;
+        }
+    }
+
+    public void Dispose()
+    {
+        Dispose(disposing: true);
+        GC.SuppressFinalize(this);
+    }
+}
+```
 
 
 ## 4. We Add RabbitMQ in the eShop.AppHost project
