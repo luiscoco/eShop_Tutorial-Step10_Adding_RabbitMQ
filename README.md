@@ -964,6 +964,9 @@ public class IntegrationEventLogEntry
 
 ### 3.5. IntegrationLogExtensions
 
+This extension method encapsulates the configuration logic for the **IntegrationEventLogEntry** entity, promoting code reuse and separation of concerns
+
+Instead of embedding the configuration logic in the **DbContext** class, it's defined here, keeping the DbContext cleaner and more modular
 
 ```csharp
 namespace eShop.IntegrationEventLogEF;
@@ -982,9 +985,25 @@ public static class IntegrationLogExtensions
 }
 ```
 
-
 ### 3.6. ResilientTransaction
 
+This code defines a class, **ResilientTransaction**, that provides a utility for executing a database operation wrapped in a transaction while leveraging **Entity Framework Core's (EF Core)** 
+
+Purpose: To provide a mechanism for executing database operations in a resilient manner, ensuring that: 
+
+- Operations are transactional (all-or-nothing)
+
+- Connection resiliency is handled using EF Core's built-in strategies for transient failure handling
+
+resiliency strategies
+
+**Key Benefits**:
+
+- Transaction Safety: Ensures operations are transactional (commit or rollback)
+
+- Resiliency: Automatically retries transient failures
+
+- Reusability: Encapsulates logic for transactions and resiliency in one place
 
 ```csharp
 namespace eShop.IntegrationEventLogEF.Utilities;
@@ -1011,8 +1030,6 @@ public class ResilientTransaction
     }
 }
 ```
-
-
 
 ### 3.7. IIntegrationEventLogService
 
