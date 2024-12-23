@@ -190,6 +190,8 @@ public record IntegrationEvent
 
 ### 1.4. Extensions
 
+![image](https://github.com/user-attachments/assets/435231f4-8df9-4ef8-aa45-58c240e81439)
+
 This code defines a set of **extension methods** for configuring and extending the functionality of an event bus in a .NET application
 
 This code is part of a framework for setting up and managing an event-driven system using a message bus. It focuses on:
