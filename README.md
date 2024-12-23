@@ -996,15 +996,6 @@ public class ResilientTransaction
 
 
 ```csharp
-
-```
-
-
-
-### 3.8. IIntegrationEventLogService
-
-
-```csharp
 namespace eShop.IntegrationEventLogEF.Services;
 
 public interface IIntegrationEventLogService
@@ -1017,7 +1008,7 @@ public interface IIntegrationEventLogService
 }
 ```
 
-### 3.9. IntegrationEventLogService
+### 3.8. IntegrationEventLogService
 
 
 ```csharp
