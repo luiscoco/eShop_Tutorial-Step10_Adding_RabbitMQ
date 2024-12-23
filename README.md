@@ -880,21 +880,58 @@ IntegrationLogExtensions.cs: Provides utility methods for working with event log
 **EventBus**:
 
 
-### 3.3. 
+### 3.3. EventStateEnum
+
+```csharp
+
+```
+
+
+
+### 3.4. IntegrationEventLogEntry
+
+
+```csharp
+
+```
 
 
 
 
 
-### 3.4. 
+
+### 3.5. IntegrationLogExtensions
+
+
+```csharp
+
+```
+
+
+### 3.6. ResilientTransaction
+
+
+```csharp
+
+```
 
 
 
+### 3.7. IIntegrationEventLogService
+
+
+```csharp
+
+```
 
 
 
-### 3.5. 
+### 3.8. IntegrationEventLogService
 
+
+```csharp
+
+```
 
 
 
