@@ -847,6 +847,8 @@ public class RabbitMQTelemetry
 
 ## 3. IntegrationEventLogEF
 
+![image](https://github.com/user-attachments/assets/9676d7f4-4411-4c7a-a640-67c50a8976aa)
+
 Purpose: Manages the persistence of integration events in a database for reliable delivery.
 
 **Key Responsibilities**:
