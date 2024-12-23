@@ -867,6 +867,38 @@ Services: Likely includes logic to manage and query integration event logs
 
 IntegrationLogExtensions.cs: Provides utility methods for working with event logs
 
+### 3.1. Load Nuge Packages
+
+
+
+
+### 3.2. 
+
+
+
+
+
+### 3.3. 
+
+
+
+
+
+### 3.4. 
+
+
+
+
+
+
+### 3.5. 
+
+
+
+
+
+
+
 ## 4. We Add RabbitMQ in the eShop.AppHost project
 
 ### 4.1. We Add the Nuget Package
