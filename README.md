@@ -989,13 +989,11 @@ public static class IntegrationLogExtensions
 
 This code defines a class, **ResilientTransaction**, that provides a utility for executing a database operation wrapped in a transaction while leveraging **Entity Framework Core's (EF Core)** 
 
-Purpose: To provide a mechanism for executing database operations in a resilient manner, ensuring that: 
+**Purpose**: To provide a mechanism for executing database operations in a resilient manner, ensuring that: 
 
 - Operations are transactional (all-or-nothing)
 
-- Connection resiliency is handled using EF Core's built-in strategies for transient failure handling
-
-resiliency strategies
+- Connection resiliency is handled using EF Core's built-in strategies for transient failure handling resiliency strategies
 
 **Key Benefits**:
 
