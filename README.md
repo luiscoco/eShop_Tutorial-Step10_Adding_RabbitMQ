@@ -44,6 +44,8 @@ Extensions: Utility or extension methods to support the event bus
 
 ### 1.2. Abstractions
 
+![image](https://github.com/user-attachments/assets/fb7553de-57b3-4bd7-8122-a8350e37815d)
+
 **IEventBus** handles event publishing
 
 **IEventBus.cs** Defines the contract for an event bus
