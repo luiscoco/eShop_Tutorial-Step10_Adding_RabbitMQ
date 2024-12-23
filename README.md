@@ -342,6 +342,8 @@ Ensuring the application is resilient against network issues or service outages
 
 ### 2.3. ActivityExtensions
 
+![image](https://github.com/user-attachments/assets/175278c5-9999-40b5-b01e-131eb7ad4030)
+
 This code defines an extension method for the **Activity** class, which is used in distributed tracing to represent the execution of a single operation or span in a system
 
 The **SetExceptionTags** method is a utility for **logging exception details** into an Activity
@@ -371,6 +373,8 @@ internal static class ActivityExtensions
 
 ### 2.4. EventBusOptions
 
+![image](https://github.com/user-attachments/assets/d7370bd4-919d-469f-a959-9a0b9982b068)
+
 The EventBusOptions class defines two key options for an event bus that uses **RabbitMQ**
 
 **SubscriptionClientName**: Identifies the client or consumer
@@ -390,6 +394,8 @@ public class EventBusOptions
 ```
 
 ### 2.5. RabbitMqDependencyInjectionExtensions
+
+![image](https://github.com/user-attachments/assets/2535482d-e345-4c34-a317-4e9f46b27def)
 
 This code defines a set of extension methods for integrating a RabbitMQ-based event bus into a .NET application's dependency injection and hosting framework
 
@@ -455,8 +461,9 @@ public static class RabbitMqDependencyInjectionExtensions
 }
 ```
 
-
 ### 2.6. RabbitMQEventBus
+
+![image](https://github.com/user-attachments/assets/62e49070-84ce-423b-9c61-acfafa363f27)
 
 This code defines a RabbitMQEventBus class, which implements an event bus using RabbitMQ for message-based communication in a distributed system
 
@@ -803,9 +810,9 @@ public sealed class RabbitMQEventBus(
 }
 ```
 
-
-
 ### 2.7. RabbitMQTelemetry
+
+![image](https://github.com/user-attachments/assets/f467bf44-d413-4579-a749-45af6c78cae0)
 
 The RabbitMQTelemetry class encapsulates distributed tracing and context propagation tools for RabbitMQ:
 
