@@ -1043,23 +1043,23 @@ This interface outlines the contract for managing and tracking the lifecycle of 
 
 **RetrieveEventLogsPendingToPublishAsync(Guid transactionId)**: Retrieves a list of integration event log entries that are pending publication, based on a specific transaction ID
 
-Purpose: To identify events associated with a transaction that need to be published to external systems
+**Purpose**: To identify events associated with a transaction that need to be published to external systems
 
 **SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction)**: Saves a new integration event to the event log, associating it with a database transaction
 
-Purpose: To ensure that event publishing is part of the same transactional unit as the business operation, ensuring consistency
+**Purpose**: To ensure that event publishing is part of the same transactional unit as the business operation, ensuring consistency
 
 **MarkEventAsPublishedAsync(Guid eventId)**: Marks an event as successfully published
 
-Purpose: To indicate that the event has been sent and no further action is required
+**Purpose**: To indicate that the event has been sent and no further action is required
 
 **MarkEventAsInProgressAsync(Guid eventId)**: Marks an event as being in progress of being published
 
-Purpose: To prevent duplicate processing or concurrent attempts to publish the same event
+**Purpose**: To prevent duplicate processing or concurrent attempts to publish the same event
 
 **MarkEventAsFailedAsync(Guid eventId)**: Marks an event as failed to publish
 
-Purpose: To track and possibly retry events that encountered errors during the publishing process
+**Purpose**: To track and possibly retry events that encountered errors during the publishing process
 
 **Event-Driven Architecture**: This interface supports the implementation of reliable communication between microservices by managing event publishing and tracking their states
 
@@ -1086,9 +1086,7 @@ This code implements a service class **IntegrationEventLogService<TContext>** fo
 
 The class is designed to interact with a database context (**TContext**), log events, and update their statuses
 
-**Purpose**:
-
-This class is part of an event logging mechanism used in microservices or distributed systems. It helps:
+**Purpose**: This class is part of an event logging mechanism used in microservices or distributed systems. It helps:
 
 Log integration events for reliable message-based communication between systems
 
