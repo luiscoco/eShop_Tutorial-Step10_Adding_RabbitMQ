@@ -1082,6 +1082,29 @@ public interface IIntegrationEventLogService
 
 ### 3.8. IntegrationEventLogService
 
+This code implements a service class **IntegrationEventLogService<TContext>** for managing integration events in an event-driven architecture
+
+The class is designed to interact with a database context (**TContext**), log events, and update their statuses
+
+**Purpose**:
+
+This class is part of an event logging mechanism used in microservices or distributed systems. It helps:
+
+Log integration events for reliable message-based communication between systems
+
+Persist and retrieve events from a database
+
+Track event states and retries to ensure eventual consistency
+
+**Key Concepts**:
+
+Integration Events: Messages that services publish when something significant happens (e.g., order placed)
+
+Event State: Tracks whether an event is pending, in progress, published, or failed
+
+Transaction Management: Associates events with database transactions for atomic operations
+
+Resource Management: Uses IDisposable to manage the database context's lifecycle efficiently
 
 ```csharp
 namespace eShop.IntegrationEventLogEF.Services;
