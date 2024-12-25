@@ -498,6 +498,54 @@ This class provides a robust **RabbitMQ-based** event bus with:
 
 **Telemetry**: Activities are created for each operation (publish/consume) to provide distributed traceability
 
+**Key Components**:
+
+**Dependencies and Configuration**: Dependencies like ILogger, IServiceProvider, and RabbitMQTelemetry are injected for logging, dependency resolution, and telemetry
+
+Configuration (EventBusOptions) is used for RabbitMQ settings like queue names and retry counts
+
+**Publish Events (PublishAsync)**: Serializes the event into a byte array
+
+Declares an exchange and sends the event with a routing key matching the event name
+
+Adds OpenTelemetry tracing to track the event lifecycle
+
+Uses a resilience pipeline (with retries) for fault tolerance
+
+**Consume Events**: Sets up a RabbitMQ consumer that listens to a specific queue
+
+Extracts tracing context from incoming messages and processes events
+
+Processes events by deserializing the message and invoking registered handlers
+
+**Tracing with OpenTelemetry**: Activities are created for publishing and consuming messages to trace the message lifecycle
+
+Tags such as messaging.system, messaging.destination.name, and messaging.operation are set to conform to OpenTelemetry standards
+
+**Fault Tolerance**: A retry pipeline (using Polly) is configured for handling transient errors like connection issues
+
+Dead Letter Exchange (DLX) is suggested for unprocessable messages
+
+**Serialization/Deserialization**: JSON serialization/deserialization is used for converting messages to/from IntegrationEvent objects
+
+**Hosting**: Implements IHostedService to manage the RabbitMQ connection lifecycle:
+
+**StartAsync**: Initializes the RabbitMQ connection and sets up the consumer
+
+**StopAsync**: Placeholder for clean shutdown logic
+
+**Key Concepts**
+
+**Exchange and Queue**: An exchange (eshop_event_bus) routes messages to queues based on routing keys
+
+The queue is the endpoint where the consumer listens
+
+**Handlers**: Event handlers process the deserialized messages. Handlers are resolved dynamically based on the event type
+
+**Telemetry**: OpenTelemetry is used for observability, making it easier to trace the flow of messages and identify bottlenecks or errors
+
+**Resilience**: Implements exponential backoff retries for transient RabbitMQ connection or delivery issues
+
 ```csharp
 namespace eShop.EventBusRabbitMQ;
 
