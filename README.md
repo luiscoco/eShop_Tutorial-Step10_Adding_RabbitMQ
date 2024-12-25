@@ -1037,7 +1037,35 @@ public class ResilientTransaction
 
 ### 3.7. IIntegrationEventLogService
 
+The code defines an interface named **IIntegrationEventLogService** in the eShop.IntegrationEventLogEF.Services namespace
 
+This interface outlines the contract for managing and tracking the lifecycle of integration events within an event-driven system
+
+**RetrieveEventLogsPendingToPublishAsync(Guid transactionId)**: Retrieves a list of integration event log entries that are pending publication, based on a specific transaction ID
+
+Purpose: To identify events associated with a transaction that need to be published to external systems
+
+**SaveEventAsync(IntegrationEvent @event, IDbContextTransaction transaction)**: Saves a new integration event to the event log, associating it with a database transaction
+
+Purpose: To ensure that event publishing is part of the same transactional unit as the business operation, ensuring consistency
+
+**MarkEventAsPublishedAsync(Guid eventId)**: Marks an event as successfully published
+
+Purpose: To indicate that the event has been sent and no further action is required
+
+**MarkEventAsInProgressAsync(Guid eventId)**: Marks an event as being in progress of being published
+
+Purpose: To prevent duplicate processing or concurrent attempts to publish the same event
+
+**MarkEventAsFailedAsync(Guid eventId)**: Marks an event as failed to publish
+
+Purpose: To track and possibly retry events that encountered errors during the publishing process
+
+**Event-Driven Architecture**: This interface supports the implementation of reliable communication between microservices by managing event publishing and tracking their states
+
+**Transactional Consistency**: Tying events to transactions ensures that events are only published if the associated operation completes successfully
+
+**State Management**: Methods to track different states (pending, in-progress, published, failed) provide a way to handle retries and diagnostics effectively
 
 ```csharp
 namespace eShop.IntegrationEventLogEF.Services;
