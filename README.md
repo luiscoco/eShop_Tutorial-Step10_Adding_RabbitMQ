@@ -254,6 +254,9 @@ public static class EventBusBuilderExtensions
     }
 }
 ```
+This code defines a static class **GenericTypeExtensions** within the eShop.EventBus.Extensions namespace
+
+It provides extension methods to extract and format the name of a generic type or object in a user-friendly way 
 
 **GenericTypeExtensions.cs**
 
