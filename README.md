@@ -204,6 +204,12 @@ Supporting multiple handlers for the same event type
 
 Ensuring event type mappings are tracked for runtime efficiency and correctness
 
+This code is part of an **Event Bus** system designed to facilitate event-driven architecture by managing event subscriptions and handling
+
+The code defines a set of static extension methods for an **IEventBusBuilder** interface to extend its functionality
+
+These methods are used to configure **JSON** serialization options and manage event subscriptions in a highly modular way
+
 **EventBusBuilderExtensions.cs**
 
 ```csharp
