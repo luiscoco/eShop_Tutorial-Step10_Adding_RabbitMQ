@@ -474,9 +474,9 @@ public static class RabbitMqDependencyInjectionExtensions
 
 ![image](https://github.com/user-attachments/assets/62e49070-84ce-423b-9c61-acfafa363f27)
 
-This code defines a RabbitMQEventBus class, which implements an event bus using RabbitMQ for message-based communication in a distributed system
+This code defines a **RabbitMQEventBus** class, which implements an event bus using **RabbitMQ** for message-based communication in a distributed system
 
-This class provides a robust RabbitMQ-based event bus with:
+This class provides a robust **RabbitMQ-based** event bus with:
 
 **Message Publishing and Consumption**: Handles event-based communication using RabbitMQ
 
