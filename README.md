@@ -997,11 +997,11 @@ This code defines a class, **ResilientTransaction**, that provides a utility for
 
 **Key Benefits**:
 
-- Transaction Safety: Ensures operations are transactional (commit or rollback)
+- **Transaction Safety**: Ensures operations are transactional (commit or rollback)
 
-- Resiliency: Automatically retries transient failures
+- **Resiliency**: Automatically retries transient failures
 
-- Reusability: Encapsulates logic for transactions and resiliency in one place
+- **Reusability**: Encapsulates logic for transactions and resiliency in one place
 
 This utility is particularly useful in **microservices** or **event-driven** architectures where:
 
@@ -1098,13 +1098,13 @@ Track event states and retries to ensure eventual consistency
 
 **Key Concepts**:
 
-Integration Events: Messages that services publish when something significant happens (e.g., order placed)
+**Integration Events**: Messages that services publish when something significant happens (e.g., order placed)
 
-Event State: Tracks whether an event is pending, in progress, published, or failed
+**Event State**: Tracks whether an event is pending, in progress, published, or failed
 
-Transaction Management: Associates events with database transactions for atomic operations
+**Transaction Management**: Associates events with database transactions for atomic operations
 
-Resource Management: Uses IDisposable to manage the database context's lifecycle efficiently
+**Resource Management**: Uses IDisposable to manage the database context's lifecycle efficiently
 
 ```csharp
 namespace eShop.IntegrationEventLogEF.Services;
@@ -1186,8 +1186,6 @@ public class IntegrationEventLogService<TContext> : IIntegrationEventLogService,
             {
                 _context.Dispose();
             }
-
-
             _disposedValue = true;
         }
     }
@@ -1199,7 +1197,6 @@ public class IntegrationEventLogService<TContext> : IIntegrationEventLogService,
     }
 }
 ```
-
 
 ## 4. We Add RabbitMQ in the eShop.AppHost project
 
@@ -1213,13 +1210,13 @@ It enables developers to configure RabbitMQ resources within their application's
 
 **Key Features**:
 
-Resource Configuration: Allows the addition of RabbitMQ server resources to the application model using the AddRabbitMQ method
+**Resource Configuration**: Allows the addition of RabbitMQ server resources to the application model using the AddRabbitMQ method
 
-Management Plugin Support: Enables the RabbitMQ management plugin for monitoring and management purposes through the WithManagementPlugin method
+**Management Plugin Support**: Enables the RabbitMQ management plugin for monitoring and management purposes through the WithManagementPlugin method
 
-Data Persistence Options: Supports configuring data persistence using volumes or bind mounts to ensure data durability across container restarts
+**Data Persistence Options**: Supports configuring data persistence using volumes or bind mounts to ensure data durability across container restarts
 
-Health Checks: Automatically adds health checks to verify that the RabbitMQ server is running and that a connection can be established
+**Health Checks**: Automatically adds health checks to verify that the RabbitMQ server is running and that a connection can be established
 
 ### 4.2. We modify the eShop.AppHost middleware
 
@@ -1235,9 +1232,9 @@ var rabbitMq = builder.AddRabbitMQ("eventbus");
 
 The following code configures a set of projects (or microservices) in a .NET application using a builder pattern
 
-builder: This object is used to configure resources and dependencies for various projects in the application
+**builder**: This object is used to configure resources and dependencies for various projects in the application
 
-AddProject: Registers a new project (or microservice) with a specified name and additional configuration
+**AddProject**: Registers a new project (or microservice) with a specified name and additional configuration
 
 ```csharp
 var basketApi = builder.AddProject<Projects.Basket_API>("basket-api")
